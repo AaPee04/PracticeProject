@@ -3,5 +3,7 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "react-vite"
+  "type": "react-vite",
+
+  "id": "com.example.practiceproject"
 }
