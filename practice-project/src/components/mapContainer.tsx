@@ -1,31 +1,36 @@
-import React, { useRef, useEffect } from 'react';
-import * as maptilersdk from '@maptiler/sdk';
-import "@maptiler/sdk/dist/maptiler-sdk.css";
-import './mapContainer.css';
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
+import TileLayer from 'ol/layer/Tile.js';
+import TileJSON from 'ol/source/TileJSON.js';
+import Attribution from 'ol/control/Attribution.js';
+import { defaults as defaultControls } from 'ol/control/defaults.js';
+import { fromLonLat } from 'ol/proj.js';
 
-export default function MapContainer() {
-  const mapContainer = useRef<HTMLDivElement | null>(null);
-  const map = useRef<maptilersdk.Map | null>(null);
-  const oulu = { lng: 25.4682 , lat: 65.0121 }; // Oulu, Finland
-  const zoom = 14;
-  maptilersdk.config.apiKey = 'Sef0x7LTO0dkohPrF8Qh';
+const key = 'Sef0x7LTO0dkohPrF8Qh';
 
-  useEffect(() => {
-    if (map.current) return; // stops map from intializing more than once
-    if (!mapContainer.current) return; // ensure container exists
+const attribution = new Attribution({
+  collapsible: false,
+});
 
-    map.current = new maptilersdk.Map({
-      container: mapContainer.current,
-      style: "openstreetmap",
-      center: [oulu.lng, oulu.lat],
-      zoom: zoom
-    });
+const source = new TileJSON({
+  url: `https://api.maptiler.com/maps/openstreetmap/tiles.json?key=${key}`, // source URL
+  tileSize: 512,
+  crossOrigin: 'anonymous'
+});
 
-  }, [oulu.lng, oulu.lat, zoom]);
+const MapContainer = new Map({
+  layers: [
+    new TileLayer({
+      source: source
+    })
+  ],
+  controls: defaultControls({attribution: false}).extend([attribution]),
+  target: 'map',
+  view: new View({
+    constrainResolution: true,
+    center: fromLonLat([25.4682, 65.0121]), // starting position [lng, lat]
+    zoom: 2 // starting zoom
+  })
+});
 
-  return (
-    <div className="map-wrap">
-      <div ref={mapContainer} className="map" />
-    </div>
-  );
-}
+export default MapContainer;

@@ -12,7 +12,7 @@ import {
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, map, square, triangle } from 'ionicons/icons';
 import Map from './pages/map';
-import Tab2 from './pages/Tab2';
+import Walk from './pages/walk';
 import Stats from './pages/stats';
 
 /* Core CSS required for Ionic components to work properly */
@@ -55,8 +55,8 @@ const App: React.FC = () => (
           <Route exact path="/map">
             <Map />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/walk">
+            <Walk />
           </Route>
           <Route path="/stats">
             <Stats />
@@ -70,9 +70,9 @@ const App: React.FC = () => (
             <IonIcon aria-hidden="true" icon={map} />
             <IonLabel>Map</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="walk" href="/walk">
             <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
+            <IonLabel>Walk</IonLabel>
           </IonTabButton>
           <IonTabButton tab="stats" href="/stats">
             <IonIcon aria-hidden="true" icon={square} />
