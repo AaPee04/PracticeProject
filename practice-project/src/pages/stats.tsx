@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { IonAccordionGroup, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonAccordion, IonItem, IonLabel } from '@ionic/react';
+import { IonAccordionGroup, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonAccordion, IonItem, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './stats.css';
 
@@ -28,32 +28,30 @@ const Stats: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Statistics page" />
-        <IonAccordionGroup ref={accordionGroup} multiple={true}>
-          <IonAccordion value="first">
-            <IonItem slot="header" color="light">
-              <IonLabel>First Accordion</IonLabel>
-            </IonItem>
-            <div className="ion-padding" slot="content">
-              First Content
-            </div>
-          </IonAccordion>
-          <IonAccordion value="second">
-            <IonItem slot="header" color="light">
-              <IonLabel>Second Accordion</IonLabel>
-            </IonItem>
-            <div className="ion-padding" slot="content">
-              Second Content
-            </div>
-          </IonAccordion>
-          <IonAccordion value="third">
-            <IonItem slot="header" color="light">
-              <IonLabel>Third Accordion</IonLabel>
-            </IonItem>
-            <div className="ion-padding" slot="content">
-              Third Content
-            </div>
-          </IonAccordion>
-        </IonAccordionGroup>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Length</IonCardTitle>
+            <IonCardSubtitle>Length Walked</IonCardSubtitle>
+          </IonCardHeader>
+        </IonCard>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Time</IonCardTitle>
+            <IonCardSubtitle>Time Walked</IonCardSubtitle>
+          </IonCardHeader>
+        </IonCard>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Walks</IonCardTitle>
+            <IonCardSubtitle>Amount of Walks</IonCardSubtitle>
+          </IonCardHeader>
+        </IonCard>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Speed</IonCardTitle>
+            <IonCardSubtitle>Average Speed of all Walks</IonCardSubtitle>
+          </IonCardHeader>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, map, square, triangle } from 'ionicons/icons';
+import { map, analytics, walk } from 'ionicons/icons';
 import Map from './pages/map';
 import Walk from './pages/walk';
 import Stats from './pages/stats';
@@ -71,11 +71,11 @@ const App: React.FC = () => (
             <IonLabel>Map</IonLabel>
           </IonTabButton>
           <IonTabButton tab="walk" href="/walk">
-            <IonIcon aria-hidden="true" icon={ellipse} />
+            <IonIcon aria-hidden="true" icon={walk} />
             <IonLabel>Walk</IonLabel>
           </IonTabButton>
           <IonTabButton tab="stats" href="/stats">
-            <IonIcon aria-hidden="true" icon={square} />
+            <IonIcon aria-hidden="true" icon={analytics} />
             <IonLabel>Statistics</IonLabel>
           </IonTabButton>
         </IonTabBar>

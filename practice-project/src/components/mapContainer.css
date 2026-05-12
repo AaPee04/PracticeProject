@@ -30,12 +30,8 @@
 }
 
 .ol-zoom {
-  bottom: 80px;
-  right: 10px;
-  top: auto;
-  left: auto;
+  display: none;
 }
-
 .ol-zoom button:hover {
   background: rgba(0, 0, 0, 0.6);
 }
@@ -44,10 +40,6 @@
   position: absolute;
   bottom: 130px;
   right: 10px;
-}
-
-.ol-zoom {
-  position: static;
 }
 
 .ol-zoom button {
@@ -82,5 +74,42 @@
 }
 
 .ol-gps-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.ol-map-toggle-btn {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.ol-map-toggle-btn ion-icon {
+  font-size: 22px;
+  color: white;
+}
+
+.ol-map-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.ol-zoom-btn {
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ol-zoom-btn:hover {
   background: rgba(0, 0, 0, 0.6);
 }

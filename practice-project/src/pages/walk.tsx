@@ -1,4 +1,20 @@
-import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonSearchbar, IonFab, IonFabList, IonFabButton, IonIcon } from '@ionic/react';
+import { 
+  IonButton,
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonSearchbar, 
+  IonFab, 
+  IonFabList, 
+  IonFabButton, 
+  IonIcon,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle
+} from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './walk.css';
 import { chevronUpCircle, colorPalette, globe, searchCircle, square, trashBin } from 'ionicons/icons';
@@ -37,6 +53,14 @@ const Walk: React.FC = () => {
             </IonFabButton>
           </IonFabList>
         </IonFab>
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Walks</IonCardTitle>
+            <IonCardSubtitle>Once the Database is in create a automaticly a new card for a walk</IonCardSubtitle>
+          </IonCardHeader>
+          <IonButton fill="clear">Route</IonButton>
+          <IonButton fill="clear">Delete</IonButton>
+        </IonCard>
       </IonContent>
     </IonPage>
   );
