@@ -1,19 +1,21 @@
-import { 
+import {
   IonButton,
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonSearchbar, 
-  IonFab, 
-  IonFabList, 
-  IonFabButton, 
+  IonSearchbar,
+  IonFab,
+  IonFabList,
+  IonFabButton,
   IonIcon,
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardSubtitle
+  IonCardSubtitle,
+  IonAlert,
+  IonNavLink
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './walk.css';
@@ -58,8 +60,31 @@ const Walk: React.FC = () => {
             <IonCardTitle>Walks</IonCardTitle>
             <IonCardSubtitle>Once the Database is in create a automaticly a new card for a walk</IonCardSubtitle>
           </IonCardHeader>
-          <IonButton fill="clear">Route</IonButton>
-          <IonButton fill="clear">Delete</IonButton>
+          <IonButton>Route</IonButton>
+          <>
+            <IonButton id="present-alert">Delete</IonButton>
+            <IonAlert
+              header="Are you sure"
+              trigger="present-alert"
+              buttons={[
+                {
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: () => {
+                    console.log('Delete cancelled');
+                  },
+                },
+                {
+                  text: 'Yes',
+                  role: 'confirm',
+                  handler: () => {
+                    console.log('Walk Deleted');
+                  },
+                },
+              ]}
+              onDidDismiss={({ detail }) => console.log(`Dismissed with role: ${detail.role}`)}
+            ></IonAlert>
+          </>
         </IonCard>
       </IonContent>
     </IonPage>

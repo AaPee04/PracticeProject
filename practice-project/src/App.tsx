@@ -10,10 +10,11 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { map, analytics, walk } from 'ionicons/icons';
+import { map, analytics, walk, settings } from 'ionicons/icons';
 import Map from './pages/map';
 import Walk from './pages/walk';
 import Stats from './pages/stats';
+import Settings from './pages/settings';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -64,6 +65,9 @@ const App: React.FC = () => (
           <Route exact path="/">
             <Redirect to="/map" />
           </Route>
+          <Route exact path="/">
+            <Redirect to="/settings" />
+          </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="map" href="/map">
@@ -77,6 +81,10 @@ const App: React.FC = () => (
           <IonTabButton tab="stats" href="/stats">
             <IonIcon aria-hidden="true" icon={analytics} />
             <IonLabel>Statistics</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="settings" href="/settings">
+            <IonIcon aria-hidden="true" icon={settings} />
+            <IonLabel>Settings</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

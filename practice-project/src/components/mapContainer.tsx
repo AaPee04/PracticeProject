@@ -12,6 +12,7 @@ import Point from "ol/geom/Point";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { Style, Icon } from "ol/style";
+import Overlay from "ol/Overlay";
 
 import "./mapContainer.css";
 
@@ -27,7 +28,7 @@ const MapContainer: React.FC = () => {
 
     const streetLayer = new TileLayer({
       source: new TileJSON({
-        url: `https://api.maptiler.com/maps/openstreetmap/tiles.json?key=${key}`,
+        url: `https://api.maptiler.com/maps/streets/tiles.json?key=${key}`,
         tileSize: 512,
         crossOrigin: "anonymous",
       }),
@@ -43,9 +44,18 @@ const MapContainer: React.FC = () => {
       visible: false,
     });
 
+    const baseLayer = new TileLayer({
+      source: new TileJSON({
+        url: `https://api.maptiler.com/maps/base/tiles.json?key=${key}`,
+        tileSize: 512,
+        crossOrigin: "anonymous",
+      }),
+      visible: false,
+    });
+
     const map = new Map({
       target: mapRef.current,
-      layers: [streetLayer, satelliteLayer],
+      layers: [streetLayer, satelliteLayer, baseLayer],
       controls: defaultControls({ attribution: false }).extend([attribution]),
       view: new View({
         center: fromLonLat([25.4682, 65.0121]),
@@ -58,19 +68,6 @@ const MapContainer: React.FC = () => {
       geometry: new Point(fromLonLat([0, 0])),
     });
 
-    userLocationFeature.setStyle(
-      new Style({
-        image: new Icon({
-          src: "data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='deepskyblue'>\
-<circle cx='12' cy='12' r='10' />\
-</svg>",
-          anchor: [0.5, 0.5],
-          scale: 1,
-        }),
-      })
-    );
-
     const userLocationSource = new VectorSource({
       features: [userLocationFeature],
     });
@@ -81,6 +78,17 @@ const MapContainer: React.FC = () => {
     });
 
     map.addLayer(userLocationLayer);
+
+    const userLocationEl = document.createElement("div");
+    userLocationEl.className = "ol-user-location";
+
+    const userLocationOverlay = new Overlay({
+      element: userLocationEl,
+      positioning: "center-center",
+      stopEvent: false,
+    });
+
+    map.addOverlay(userLocationOverlay);
 
     const stackElement = document.createElement("div");
     stackElement.className = "ol-control-stack ol-unselectable ol-control";
@@ -142,7 +150,12 @@ const MapContainer: React.FC = () => {
         navigator.geolocation.clearWatch(watchId);
         watchId = null;
 
-        userLocationLayer.setVisible(false);
+        userLocationEl.style.display = "none";
+
+        map.once("postrender", () => {
+          userLocationOverlay.setPosition(map.getView().getCenter());
+        });
+
         gpsButton.style.background = "rgba(0,0,0,0.4)";
         return;
       }
@@ -152,14 +165,14 @@ const MapContainer: React.FC = () => {
         (pos) => {
           const { latitude, longitude } = pos.coords;
 
-          userLocationFeature.getGeometry()?.setCoordinates(
-            fromLonLat([longitude, latitude])
-          );
+          const coords = fromLonLat([longitude, latitude]);
 
-          userLocationLayer.setVisible(true);
+          userLocationOverlay.setPosition(coords);
+
+          userLocationEl.style.display = "block";
 
           map.getView().animate({
-            center: fromLonLat([longitude, latitude]),
+            center: coords,
             zoom: 15,
             duration: 500,
           });
