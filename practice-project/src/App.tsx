@@ -62,11 +62,11 @@ const App: React.FC = () => (
           <Route path="/stats">
             <Stats />
           </Route>
-          <Route exact path="/">
-            <Redirect to="/map" />
+          <Route path="/settings">
+            <Settings />
           </Route>
           <Route exact path="/">
-            <Redirect to="/settings" />
+            <Redirect to="/map" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">

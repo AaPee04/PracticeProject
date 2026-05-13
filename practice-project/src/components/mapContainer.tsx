@@ -13,6 +13,8 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import { Style, Icon } from "ol/style";
 import Overlay from "ol/Overlay";
+import LineString from "ol/geom/LineString";
+import Stroke from "ol/style/Stroke";
 
 import "./mapContainer.css";
 
@@ -98,17 +100,108 @@ const MapContainer: React.FC = () => {
     const gpsButton = document.createElement("button");
     const mapToggleButton = document.createElement("button");
 
+    const routeFeature = new Feature({
+      geometry: new LineString([]),
+    });
+
+    routeFeature.setStyle(
+      new Style({
+        stroke: new Stroke({
+          color: "deepskyblue",
+          width: 4,
+        }),
+      })
+    );
+
+    const routeSource = new VectorSource({
+      features: [routeFeature],
+    });
+
+    const routeLayer = new VectorLayer({
+      source: routeSource,
+      visible: false,
+    });
+
+    map.addLayer(routeLayer);
+
+    const walkToggleBtn = document.getElementById("walkToggleBtn");
+    if (!walkToggleBtn) {
+      console.error("walkToggleBtn not found");
+      return;
+    }
+
+    let isWalking = false;
+    let routeCoords: number[][] = [];
+    let walkStartTime: number | null = null;
 
     map.once("postrender", () => {
       stackElement.appendChild(zoomInButton);
       stackElement.appendChild(zoomOutButton);
-
       stackElement.appendChild(gpsButton);
-
       stackElement.appendChild(mapToggleButton);
 
       const stackControl = new Control({ element: stackElement });
       map.addControl(stackControl);
+
+
+
+      walkToggleBtn.addEventListener("click", async () => {
+        if (!isWalking) {
+          isWalking = true;
+          walkToggleBtn.textContent = "Stop Walk";
+
+          routeCoords = [];
+          walkStartTime = Date.now();
+
+          routeLayer.setVisible(true);
+          userLocationEl.style.display = "block";
+
+          gpsButton.style.pointerEvents = "none";
+          gpsButton.style.opacity = "0.4";
+
+          gpsButton.click();
+
+        } else {
+          isWalking = false;
+          walkToggleBtn.textContent = "Start Walk";
+
+          gpsButton.style.pointerEvents = "auto";
+          gpsButton.style.opacity = "1";
+
+          if (watchId !== null) {
+            navigator.geolocation.clearWatch(watchId);
+            watchId = null;
+          }
+
+          userLocationEl.style.display = "none";
+          routeLayer.setVisible(false);
+
+          const walkEndTime = Date.now();
+          const durationSec = Math.floor((walkEndTime - walkStartTime!) / 1000);
+
+          const distance = calculateDistance(routeCoords);
+
+          const avgSpeed =
+            distance > 0 && durationSec > 0
+              ? (distance / 1000) / (durationSec / 3600)
+              : 0;
+
+          await fetch("http://localhost:8000/add_walk.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              distance,
+              duration: durationSec,
+              avg_speed: avgSpeed,
+              route: routeCoords
+            })
+          });
+
+          alert("Walk Saved!");
+
+          routeCoords = [];
+        }
+      });
     });
 
     let watchId: number | null = null;
@@ -146,6 +239,8 @@ const MapContainer: React.FC = () => {
 `;
 
     gpsButton.addEventListener("click", () => {
+      if (isWalking) return;
+
       if (watchId !== null) {
         navigator.geolocation.clearWatch(watchId);
         watchId = null;
@@ -160,15 +255,17 @@ const MapContainer: React.FC = () => {
         return;
       }
 
-
       watchId = navigator.geolocation.watchPosition(
         (pos) => {
           const { latitude, longitude } = pos.coords;
 
           const coords = fromLonLat([longitude, latitude]);
 
-          userLocationOverlay.setPosition(coords);
+          routeCoords.push(coords);
+          routeFeature.getGeometry()?.setCoordinates(routeCoords);
+          routeLayer.setVisible(true);
 
+          userLocationOverlay.setPosition(coords);
           userLocationEl.style.display = "block";
 
           map.getView().animate({
@@ -180,7 +277,6 @@ const MapContainer: React.FC = () => {
         (err) => console.error("GPS error:", err),
         { enableHighAccuracy: true }
       );
-
 
       gpsButton.style.background = "rgba(0,150,0,0.6)";
     });
@@ -200,13 +296,31 @@ const MapContainer: React.FC = () => {
 
     const stackControl = new Control({ element: stackElement });
 
-
     return () => map.setTarget(undefined);
   }, []);
+
+  function calculateDistance(coords: number[][]) {
+    if (coords.length < 2) return 0;
+
+    let total = 0;
+
+    for (let i = 1; i < coords.length; i++) {
+      const [x1, y1] = coords[i - 1];
+      const [x2, y2] = coords[i];
+
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+
+      total += Math.sqrt(dx * dx + dy * dy);
+    }
+
+    return total * 111139; // asteet → metrit
+  }
 
   return (
     <div className="map-wrap">
       <div ref={mapRef} className="map" />
+      <button id="walkToggleBtn" className="walk-toggle-btn">Start Walk</button>
     </div>
   );
 };

@@ -5,6 +5,31 @@ import './stats.css';
 
 const Stats: React.FC = () => {
 
+  const [stats, setStats] = React.useState({
+    total_distance: 0,
+    total_duration: 0,
+    total_walks: 0,
+    avg_speed: 0
+  });
+
+  useEffect(() => {
+    fetch("http://localhost/api/get_stats.php")
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          setStats(data);
+        }
+      })
+      .catch(err => console.error("Stats fetch error:", err));
+  }, []);
+
+  function formatTime(sec: number) {
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return `${h}h ${m}m ${s}s`;
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -24,7 +49,9 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>Length</IonCardTitle>
-                  <IonCardSubtitle>Length Walked</IonCardSubtitle>
+                  <IonCardSubtitle>
+                    {stats.total_distance.toFixed(2)} m
+                  </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
@@ -32,7 +59,9 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>Time</IonCardTitle>
-                  <IonCardSubtitle>Time Walked</IonCardSubtitle>
+                  <IonCardSubtitle>
+                    {formatTime(stats.total_duration)}
+                  </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
@@ -40,7 +69,9 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>Walks</IonCardTitle>
-                  <IonCardSubtitle>Amount of Walks</IonCardSubtitle>
+                  <IonCardSubtitle>
+                    {stats.total_walks}
+                  </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
@@ -48,13 +79,14 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>Speed</IonCardTitle>
-                  <IonCardSubtitle>Average Speed of all Walks</IonCardSubtitle>
+                  <IonCardSubtitle>
+                    {stats.avg_speed.toFixed(2)} km/h
+                  </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
             </IonCol>
           </IonRow>
         </IonGrid>
-
       </IonContent>
     </IonPage>
   );

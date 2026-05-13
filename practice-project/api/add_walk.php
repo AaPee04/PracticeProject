@@ -1,4 +1,5 @@
 <?php
+file_put_contents("debug.txt", file_get_contents("php://input"));
 header("Content-Type: application/json");
 require "db.php";
 
@@ -10,11 +11,11 @@ $avg_speed = $data['avg_speed'];
 $route = json_encode($data["route"]);
 
 $stmt = $conn->prepare("INSERT INTO walks (distance, duration, avg_speed, route) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("dddss", $distance, $duration, $avg_speed, $route);
+$stmt->bind_param("dids", $distance, $duration, $avg_speed, $route);
 
-if ($stmt ->execute()){
+if ($stmt->execute()) {
     echo json_encode(["status" => "success"]);
-} else{
-    echo json_encode(["status" => "error"]);
+} else {
+    echo json_encode(["status" => "error", "message" => $stmt->error]);
 }
 ?>
