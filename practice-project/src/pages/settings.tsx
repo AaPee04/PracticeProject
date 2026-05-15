@@ -11,13 +11,27 @@ import {
     IonTitle,
     IonContent,
     IonRange,
+    IonDatetime,
 } from '@ionic/react';
 
 import { useTheme } from "../theme/themeProvider";
 import type { FontSizeMode } from "../theme/themeProvider";
 
 function Settings() {
-    const { mode, setThemeMode, fontWeight, setFontWeightMode, fontSize, setFontSizeMode } = useTheme();
+    const {
+        mode,
+        setThemeMode,
+        fontWeight,
+        setFontWeightMode,
+        fontSize,
+        setFontSizeMode,
+        autoDark,
+        setAutoDark,
+        darkStart,
+        setDarkStart,
+        darkEnd,
+        setDarkEnd
+    } = useTheme();
     const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
@@ -33,23 +47,23 @@ function Settings() {
         <IonPage>
             <IonHeader class="ion-no-border">
                 <IonToolbar>
-                    <IonTitle>Settings</IonTitle>
+                    <IonTitle>Asetukset</IonTitle>
                 </IonToolbar>
             </IonHeader>
 
             <IonContent>
-                <IonListHeader>Appearance</IonListHeader>
+                <IonListHeader>Ulkonäkö</IonListHeader>
                 <IonList inset={true}>
                     <IonItem>
                         <IonToggle
                             checked={mode === "dark"}
                             onIonChange={(e) => setThemeMode(e.detail.checked ? "dark" : "light")}
                         >
-                            Dark Mode
+                            Tumma tila
                         </IonToggle>
                     </IonItem>
                     <IonItem>
-                        <IonLabel>Text Size</IonLabel>
+                        <IonLabel>Tekstin koko</IonLabel>
                         <IonRange
                             min={0}
                             max={2}
@@ -65,9 +79,38 @@ function Settings() {
                             checked={fontWeight === "bold"}
                             onIonChange={(e) => setFontWeightMode(e.detail.checked ? "bold" : "normal")}
                         >
-                            Bold Text
+                            Suurennettu teksti
                         </IonToggle>
                     </IonItem>
+                    <IonItem>
+                        <IonToggle
+                            checked={autoDark}
+                            onIonChange={(e) => setAutoDark(e.detail.checked)}
+                        >
+                            Yötila
+                        </IonToggle>
+                    </IonItem>
+                    {autoDark && (
+                        <>
+                            <IonItem>
+                                <IonLabel>Aloitusaika</IonLabel>
+                                <IonDatetime
+                                    presentation="time"
+                                    value={darkStart}
+                                    onIonChange={(e) => setDarkStart(String(e.detail.value))}
+                                />
+                            </IonItem>
+
+                            <IonItem>
+                                <IonLabel>Lopetusaika</IonLabel>
+                                <IonDatetime
+                                    presentation="time"
+                                    value={darkEnd}
+                                    onIonChange={(e) => setDarkEnd(String(e.detail.value))}
+                                />
+                            </IonItem>
+                        </>
+                    )}
                 </IonList>
             </IonContent>
         </IonPage>
