@@ -1,0 +1,16 @@
+.stat-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: var(--ion-color-primary);
+}
+
+ion-card {
+  --background: var(--ion-card-background, var(--ion-background-color));
+  color: var(--ion-text-color);
+}
+
+ion-card-title,
+ion-card-subtitle {
+  color: var(--ion-text-color);
+}

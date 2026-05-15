@@ -17,19 +17,30 @@ import {
   IonAlert,
   IonNavLink
 } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './walk.css';
 import { chevronUpCircle, colorPalette, globe, searchCircle, square, trashBin } from 'ionicons/icons';
+import { useEffect, useState } from 'react';
+import './walk.css';
 
 const Walk: React.FC = () => {
+  const [walks, setWalks] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost/api/get_walks.php")
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          setWalks(data.walks);
+        }
+      })
+      .catch(err => console.error("Walk fetch error:", err));
+  }, []);
+
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Walk</IonTitle>
-        </IonToolbar>
-        <IonToolbar>
-          <IonSearchbar searchIcon={searchCircle} showClearButton="always" clearIcon={trashBin} placeholder="Search for a Walk"></IonSearchbar>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -38,54 +49,24 @@ const Walk: React.FC = () => {
             <IonTitle size="large">Walk</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="Walk page" />
-        <IonFab slot="fixed" vertical="bottom" horizontal="end">
-          <IonFabButton>
-            <IonIcon icon={chevronUpCircle}></IonIcon>
-          </IonFabButton>
-          <IonFabList side="top">
-            <IonFabButton>
-              <IonIcon icon={square}></IonIcon>
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={colorPalette}></IonIcon>
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={globe}></IonIcon>
-            </IonFabButton>
-          </IonFabList>
-        </IonFab>
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle>Walks</IonCardTitle>
-            <IonCardSubtitle>Once the Database is in create a automaticly a new card for a walk</IonCardSubtitle>
-          </IonCardHeader>
-          <IonButton>Route</IonButton>
-          <>
-            <IonButton id="present-alert">Delete</IonButton>
-            <IonAlert
-              header="Are you sure"
-              trigger="present-alert"
-              buttons={[
-                {
-                  text: 'Cancel',
-                  role: 'cancel',
-                  handler: () => {
-                    console.log('Delete cancelled');
-                  },
-                },
-                {
-                  text: 'Yes',
-                  role: 'confirm',
-                  handler: () => {
-                    console.log('Walk Deleted');
-                  },
-                },
-              ]}
-              onDidDismiss={({ detail }) => console.log(`Dismissed with role: ${detail.role}`)}
-            ></IonAlert>
-          </>
-        </IonCard>
+        {walks.map((walk, index) => (
+          <IonCard key={index}>
+            <IonCardHeader>
+              <IonCardTitle>Walk #{walk.id}</IonCardTitle>
+              <IonCardSubtitle>
+                {walk.distance.toFixed(2)} m • {walk.duration} s
+              </IonCardSubtitle>
+            </IonCardHeader>
+
+            <IonButton>
+              Route
+            </IonButton>
+
+            <IonButton color="danger" id={`delete-${walk.id}`}>
+              Delete
+            </IonButton>
+          </IonCard>
+        ))}
       </IonContent>
     </IonPage>
   );

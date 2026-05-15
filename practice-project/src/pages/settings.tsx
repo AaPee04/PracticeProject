@@ -12,10 +12,21 @@ import {
     IonContent,
     IonRange,
     IonDatetime,
+    IonAccordion,
+    IonAccordionGroup,
 } from '@ionic/react';
 
 import { useTheme } from "../theme/themeProvider";
 import type { FontSizeMode } from "../theme/themeProvider";
+
+import {
+    moon,
+    text,
+    contrast,
+    time,
+} from 'ionicons/icons';
+import { IonIcon } from '@ionic/react';
+import './settings.css';
 
 function Settings() {
     const {
@@ -52,18 +63,27 @@ function Settings() {
             </IonHeader>
 
             <IonContent>
-                <IonListHeader>Ulkonäkö</IonListHeader>
+                <IonListHeader>
+                    Ulkonäkö
+                </IonListHeader>
                 <IonList inset={true}>
                     <IonItem>
+                        <IonLabel>
+                            <IonIcon icon={moon} className="setting-icon" />
+                            Tumma tila
+                        </IonLabel>
                         <IonToggle
+                            justify="end"
                             checked={mode === "dark"}
                             onIonChange={(e) => setThemeMode(e.detail.checked ? "dark" : "light")}
                         >
-                            Tumma tila
                         </IonToggle>
                     </IonItem>
                     <IonItem>
-                        <IonLabel>Tekstin koko</IonLabel>
+                        <IonLabel>
+                            <IonIcon icon={text} className="setting-icon" />
+                            Tekstin koko
+                        </IonLabel>
                         <IonRange
                             min={0}
                             max={2}
@@ -75,42 +95,51 @@ function Settings() {
                         />
                     </IonItem>
                     <IonItem>
+                        <IonLabel>
+                            <IonIcon icon={contrast} className="setting-icon" />
+                            Suurennettu teksti
+                        </IonLabel>
                         <IonToggle
+                            justify="end"
                             checked={fontWeight === "bold"}
                             onIonChange={(e) => setFontWeightMode(e.detail.checked ? "bold" : "normal")}
-                        >
-                            Suurennettu teksti
-                        </IonToggle>
+                        />
                     </IonItem>
-                    <IonItem>
-                        <IonToggle
-                            checked={autoDark}
-                            onIonChange={(e) => setAutoDark(e.detail.checked)}
-                        >
-                            Yötila
-                        </IonToggle>
-                    </IonItem>
-                    {autoDark && (
-                        <>
-                            <IonItem>
-                                <IonLabel>Aloitusaika</IonLabel>
-                                <IonDatetime
-                                    presentation="time"
-                                    value={darkStart}
-                                    onIonChange={(e) => setDarkStart(String(e.detail.value))}
+                    <IonAccordionGroup expand="inset">
+                        <IonAccordion value="auto-dark">
+                            <IonItem slot="header">
+                                <IonLabel>
+                                    <IonIcon icon={time} className="setting-icon" />
+                                    Yötila
+                                </IonLabel>
+                                <IonToggle
+                                    checked={autoDark}
+                                    onIonChange={(e) => setAutoDark(e.detail.checked)}
+                                    slot="end"
                                 />
                             </IonItem>
 
-                            <IonItem>
-                                <IonLabel>Lopetusaika</IonLabel>
-                                <IonDatetime
-                                    presentation="time"
-                                    value={darkEnd}
-                                    onIonChange={(e) => setDarkEnd(String(e.detail.value))}
-                                />
-                            </IonItem>
-                        </>
-                    )}
+                            <div className="ion-padding" slot="content">
+                                <IonItem>
+                                    <IonLabel>Aloitusaika</IonLabel>
+                                    <IonDatetime
+                                        presentation="time"
+                                        value={darkStart}
+                                        onIonChange={(e) => setDarkStart(String(e.detail.value))}
+                                    />
+                                </IonItem>
+
+                                <IonItem>
+                                    <IonLabel>Lopetusaika</IonLabel>
+                                    <IonDatetime
+                                        presentation="time"
+                                        value={darkEnd}
+                                        onIonChange={(e) => setDarkEnd(String(e.detail.value))}
+                                    />
+                                </IonItem>
+                            </div>
+                        </IonAccordion>
+                    </IonAccordionGroup>
                 </IonList>
             </IonContent>
         </IonPage>

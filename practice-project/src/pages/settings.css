@@ -2,3 +2,10 @@
 ion-item {
   --transition: none;
 }
+
+.setting-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: var(--ion-color-primary);
+}

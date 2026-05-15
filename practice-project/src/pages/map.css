@@ -15,30 +15,21 @@ ion-content {
 }
 
 .bottom-section {
-  padding: 6px;
+  padding: 4px;
   background: #f4f4f4;
 }
 
 .map-buttons {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
-
-ion-card {
-  margin: 0 0 10px 0;
+  gap: 0px;
 }
 
 .stat-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 14px;
-}
-
-.stat-icon {
-  font-size: 28px;
-  color: var(--ion-color-primary);
+  margin-bottom: 4px;
 }
 
 .stat-row h2 {
@@ -51,4 +42,22 @@ ion-card {
   margin: 2px 0 0 0;
   font-size: 15px;
   color: #666;
+}
+
+.stat-icon {
+  font-size: 20px;
+  margin-right: 8px;
+  vertical-align: middle;
+  color: var(--ion-color-primary);
+}
+
+ion-card {
+  margin: 0 0 0px 0;
+  --background: var(--ion-card-background, var(--ion-background-color));
+  color: var(--ion-text-color);
+}
+
+ion-card-title,
+ion-card-subtitle {
+  color: var(--ion-text-color);
 }
