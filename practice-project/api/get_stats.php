@@ -1,5 +1,5 @@
-<?
-header("Content-type: application/json");
+<?php
+header("Content-Type: application/json");
 require "db.php";
 
 $sql = "
@@ -14,9 +14,9 @@ $sql = "
     FROM walks
 ";
 
-$result = $conn ->query($sql);
+$result = $conn->query($sql);
 
-if ($result && $row = $result ->fetch_assoc()) {
+if ($result && $row = $result->fetch_assoc()) {
     echo json_encode([
         "status" => "success",
         "total_distance" => floatval($row["total_distance"] ?? 0),

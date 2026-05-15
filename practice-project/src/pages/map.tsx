@@ -143,6 +143,48 @@ const Map: React.FC = () => {
       .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const finishWalk = async () => {
+    await stopTracking();
+
+    try {
+      const avgSpeed =
+        time > 0 ? (distance / 1000) / (time / 3600) : 0;
+
+      const response = await fetch("http://localhost/api/save_walk.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          distance,
+          duration: time,
+          avg_speed: avgSpeed,
+          route: positions,
+        }),
+      });
+
+      const text = await response.text();
+      console.log("RAW RESPONSE:", text);
+
+      const data = JSON.parse(text);
+
+      if (data.status === "success") {
+        alert("Kävely tallennettu onnistuneesti!");
+      } else {
+        alert("Kävelyn tallennus epäonnistui.");
+        console.error("Save error:", data.message);
+      }
+
+      setSpeed(0);
+      setDistance(0);
+      setTime(0);
+      setPositions([]);
+    } catch (error) {
+      console.error("Save error:", error);
+      alert("Kävelyn tallennus epäonnistui.");
+    }
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -214,20 +256,18 @@ const Map: React.FC = () => {
                   color="danger"
                   onClick={stopTracking}
                 >
-                  Lopeta seuranta
+                  Tauko
                 </IonButton>
               )}
 
               <IonButton
                 expand="block"
-                color="medium"
-                onClick={resetTracking}
+                color="success"
+                onClick={finishWalk}
               >
-                Resetoi
+                Lopeta lenkki
               </IonButton>
-
             </div>
-
           </div>
         </div>
       </IonContent>

@@ -13,14 +13,18 @@ const Stats: React.FC = () => {
   });
 
   useEffect(() => {
-    fetch("http://localhost/api/get_stats.php")
-      .then(res => res.json())
-      .then(data => {
-        if (data.status === "success") {
-          setStats(data);
-        }
-      })
-      .catch(err => console.error("Stats fetch error:", err));
+    const loadStats = () => {
+      fetch("http://localhost/api/get_stats.php")
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.status === "success") {
+            setStats(data);
+          }
+        });
+    };
+
+    loadStats();
   }, []);
 
   function formatTime(sec: number) {
