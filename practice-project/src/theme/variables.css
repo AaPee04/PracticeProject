@@ -1,31 +1,74 @@
-/* Ionic Variables and Theming
- * ---------------------------------------------------------------
- * Any overrides to theme variables should be placed in this file.
- * For more information, please see:
- * http://ionicframework.com/docs/theming/
- */
-
-/* This sets a different item border color for the default theme on ios and md */
 :root {
-  --ion-item-border-color: var(--ion-background-color-step-200);
+  /* LIGHT MODE */
+  --ion-color-primary: #009FE3;
+  --ion-color-primary-contrast: #ffffff;
+
+  --ion-background-color: #E5F7FD;
+  --ion-text-color: #222;
+
+  --ion-item-background: #ffffff;
+  --ion-toolbar-background: #E5F7FD;
+  --ion-card-background: #ffffff;
+
+  --app-font-weight: 400;
+  --app-font-size: 16px;
 }
 
-/* This sets a different background and item background for the default theme on ios */
-:root.ios {
-  --ion-background-color: var(--ion-background-color-step-50, #f2f2f6);
-  --ion-toolbar-background: var(--ion-background-color);
-  --ion-item-background: #fff;
+/* DARK MODE */
+.dark {
+  --ion-color-primary: #4DB8FF;
+  --ion-color-primary-contrast: #0D1B2A;
+
+  --ion-background-color: #0D1B2A;
+  --ion-text-color: #E0E1DD;
+
+  --ion-item-background: #1B263B;
+  --ion-toolbar-background: #0D1B2A;
+  --ion-card-background: #1B263B;
+
+  --app-font-weight: 400;
 }
 
-/* This sets a different background and item background for the default theme on md */
-:root.md {
-  --ion-background-color: var(--ion-background-color-step-100, #f9f9f9);
-  --ion-toolbar-background: var(--ion-background-color);
-  --ion-item-background: #fff;
+* {
+  font-weight: var(--app-font-weight, 400);
+  font-size: var(--app-font-size, 16px);
 }
 
-/* This sets a different item background when dark mode is enabled on ios and md */
-.ion-palette-dark.ios,
-.ion-palette-dark.md {
-  --ion-item-background: #1c1c1d;
+ion-range {
+  display: flex;
+  align-items: center;
+}
+
+ion-range::part(tick) {
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--range-tick-color, #9aa0a6);
+  opacity: 1;
+}
+
+ion-range::part(tick-active) {
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: var(--range-tick-active-color, #009FE3);
+  opacity: 1;
+}
+
+ion-range::part(knob) {
+  width: 22px;
+  height: 22px;
+  background: white;
+  border: 3px solid var(--range-tick-active-color, #009FE3);
+  border-radius: 50%;
+}
+
+ion-range::part(bar) {
+  height: 4px;
+  border-radius: 2px;
+}
+
+ion-range::part(bar-active) {
+  height: 4px;
+  border-radius: 2px;
 }

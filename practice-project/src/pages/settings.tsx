@@ -1,65 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
     IonItem,
     IonLabel,
     IonList,
     IonListHeader,
     IonPage,
-    IonRange,
-    IonText,
-    IonTitle,
     IonToggle,
+    IonHeader,
     IonToolbar,
+    IonTitle,
+    IonContent,
+    IonRange,
 } from '@ionic/react';
-import type { ToggleCustomEvent } from '@ionic/react';
-import { personCircle, personCircleOutline, sunny, sunnyOutline } from 'ionicons/icons';
 
-import './settings.css';
+import { useTheme } from "../theme/themeProvider";
+import type { FontSizeMode } from "../theme/themeProvider";
 
 function Settings() {
-    const [paletteToggle, setPaletteToggle] = useState(false);
-
-    // Listen for the toggle check/uncheck to toggle the dark palette
-    const toggleChange = (event: ToggleCustomEvent) => {
-        toggleDarkPalette(event.detail.checked);
-    };
-
-    // Add or remove the "ion-palette-dark" class on the html element
-    const toggleDarkPalette = (shouldAdd: boolean) => {
-        document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
-    };
-
-    // Check/uncheck the toggle and update the palette based on isDark
-    const initializeDarkPalette = (isDark: boolean) => {
-        setPaletteToggle(isDark);
-        toggleDarkPalette(isDark);
-    };
+    const { mode, setThemeMode, fontWeight, setFontWeightMode, fontSize, setFontSizeMode } = useTheme();
+    const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
-        // Use matchMedia to check the user preference
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        setIsDark(mode === "dark");
+    }, [mode]);
 
-        // Initialize the dark palette based on the initial
-        // value of the prefers-color-scheme media query
-        initializeDarkPalette(prefersDark.matches);
-
-        const setDarkPaletteFromMediaQuery = (mediaQuery: MediaQueryListEvent) => {
-            initializeDarkPalette(mediaQuery.matches);
-        };
-
-        // Listen for changes to the prefers-color-scheme media query
-        prefersDark.addEventListener('change', setDarkPaletteFromMediaQuery);
-
-        return () => {
-            prefersDark.removeEventListener('change', setDarkPaletteFromMediaQuery);
-        };
-    }, []);
+    const onToggle = (checked: boolean) => {
+        setIsDark(checked);
+        setThemeMode(checked ? "dark" : "light");
+    };
 
     return (
         <IonPage>
@@ -73,40 +41,32 @@ function Settings() {
                 <IonListHeader>Appearance</IonListHeader>
                 <IonList inset={true}>
                     <IonItem>
-                        <IonToggle checked={paletteToggle} onIonChange={toggleChange} justify="space-between">
+                        <IonToggle
+                            checked={mode === "dark"}
+                            onIonChange={(e) => setThemeMode(e.detail.checked ? "dark" : "light")}
+                        >
                             Dark Mode
                         </IonToggle>
                     </IonItem>
-                </IonList>
-
-                <IonList inset={true}>
-                    <IonItem button={true}>Text Size</IonItem>
                     <IonItem>
-                        <IonToggle justify="space-between">Bold Text</IonToggle>
-                    </IonItem>
-                </IonList>
-
-                <IonListHeader>Brightness</IonListHeader>
-                <IonList inset={true}>
-                    <IonItem>
-                        <IonRange value={40}>
-                            <IonIcon icon={sunnyOutline} slot="start"></IonIcon>
-                            <IonIcon icon={sunny} slot="end"></IonIcon>
-                        </IonRange>
+                        <IonLabel>Text Size</IonLabel>
+                        <IonRange
+                            min={0}
+                            max={2}
+                            step={1}
+                            snaps={true}
+                            ticks={true}
+                            value={fontSize}
+                            onIonChange={(e) => setFontSizeMode(e.detail.value as FontSizeMode)}
+                        />
                     </IonItem>
                     <IonItem>
-                        <IonToggle justify="space-between" checked>
-                            True Tone
+                        <IonToggle
+                            checked={fontWeight === "bold"}
+                            onIonChange={(e) => setFontWeightMode(e.detail.checked ? "bold" : "normal")}
+                        >
+                            Bold Text
                         </IonToggle>
-                    </IonItem>
-                </IonList>
-
-                <IonList inset={true}>
-                    <IonItem button={true}>
-                        <IonLabel>Night Shift</IonLabel>
-                        <IonText slot="end" color="medium">
-                            11:00 PM to 7:00 AM
-                        </IonText>
                     </IonItem>
                 </IonList>
             </IonContent>
