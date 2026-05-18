@@ -53,16 +53,11 @@ const Map: React.FC = () => {
       const watchId = await Geolocation.watchPosition(
         {
           enableHighAccuracy: true,
-          timeout: 1000,
-          maximumAge: 0,
+          timeout: 10000,
+          maximumAge: 2000,
         },
         (position, err) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-
-          if (!position) return;
+          if (err || !position) return;
 
           const coords: PositionPoint = {
             lat: position.coords.latitude,
@@ -74,26 +69,18 @@ const Map: React.FC = () => {
               const last = prev[prev.length - 1];
 
               const meters = getDistance(
-                {
-                  latitude: last.lat,
-                  longitude: last.lng,
-                },
-                {
-                  latitude: coords.lat,
-                  longitude: coords.lng,
-                }
+                { latitude: last.lat, longitude: last.lng },
+                { latitude: coords.lat, longitude: coords.lng }
               );
 
               setDistance(d => d + meters);
+
+              const kmh = meters * 3.6;
+              setSpeed(kmh);
             }
 
             return [...prev, coords];
           });
-
-          if (position.coords.speed !== null) {
-            const kmh = position.coords.speed * 3.6;
-            setSpeed(kmh);
-          }
         }
       );
 

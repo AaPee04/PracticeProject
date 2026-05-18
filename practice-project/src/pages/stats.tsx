@@ -2,10 +2,10 @@ import React, { useRef, useEffect } from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonItem, IonLabel, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonGrid, IonCol, IonRow } from '@ionic/react';
 import './stats.css';
 import {
-  walk,
-  time,
-  speedometer,
-  analytics
+  walkOutline,
+  timeOutline,
+  speedometerOutline,
+  analyticsOutline
 } from 'ionicons/icons';
 
 import { IonIcon } from '@ionic/react';
@@ -24,15 +24,15 @@ const Stats: React.FC = () => {
       fetch("http://localhost/api/get_stats.php")
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          console.log("RAW STATS:", data);
+
           if (data.status === "success") {
             setStats({
-              total_distance: data.total_distance,
-              total_duration: data.total_duration,
-              total_walks: data.total_walks,
-              avg_speed: data.avg_speed
+              total_distance: Number(data.total_distance),
+              total_duration: Number(data.total_duration),
+              total_walks: Number(data.total_walks),
+              avg_speed: Number(data.avg_speed)
             });
-            console.log("STATS STATE:", stats);
           }
         });
     };
@@ -66,11 +66,11 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>
-                    <IonIcon icon={walk} className="stat-icon" />
+                    <IonIcon icon={walkOutline} className="stat-icon" />
                     Length
                   </IonCardTitle>
                   <IonCardSubtitle>
-                    {(stats.total_distance ?? 0).toFixed(2)} m
+                    {(Number(stats.total_distance) || 0).toFixed(2)} m
                   </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
@@ -79,11 +79,11 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>
-                    <IonIcon icon={time} className="stat-icon" />
+                    <IonIcon icon={timeOutline} className="stat-icon" />
                     Time
                   </IonCardTitle>
                   <IonCardSubtitle>
-                    {formatTime(stats.total_duration)}
+                    {formatTime(Number(stats.total_duration || 0))}
                   </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
@@ -92,7 +92,7 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>
-                    <IonIcon icon={analytics} className="stat-icon" />
+                    <IonIcon icon={analyticsOutline} className="stat-icon" />
                     Walks
                   </IonCardTitle>
                   <IonCardSubtitle>
@@ -105,11 +105,11 @@ const Stats: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>
-                    <IonIcon icon={speedometer} className="stat-icon" />
+                    <IonIcon icon={speedometerOutline} className="stat-icon" />
                     Speed
                   </IonCardTitle>
                   <IonCardSubtitle>
-                    {stats.avg_speed.toFixed(2)} km/h
+                    {Number(stats.avg_speed ?? 0).toFixed(2)} km/h
                   </IonCardSubtitle>
                 </IonCardHeader>
               </IonCard>
