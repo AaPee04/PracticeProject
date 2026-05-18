@@ -97,7 +97,7 @@ const MapContainer: React.FC<MapContainerProps> = ({
       <svg xmlns="http://www.w3.org/2000/svg"
            height="22"
            width="22"
-           viewBox="0 0 512 512"
+           viewBox="0 0 256 256"
            fill="white">
         <path
           d="M256 112v288M112 256h288"
@@ -120,7 +120,7 @@ const MapContainer: React.FC<MapContainerProps> = ({
       <svg xmlns="http://www.w3.org/2000/svg"
            height="22"
            width="22"
-           viewBox="0 0 512 512"
+           viewBox="0 0 256 256"
            fill="white">
         <path
           d="M112 256h288"
@@ -145,7 +145,7 @@ const MapContainer: React.FC<MapContainerProps> = ({
       <svg xmlns="http://www.w3.org/2000/svg"
            height="22"
            width="22"
-           viewBox="0 0 512 512"
+           viewBox="0 0 256 256"
            fill="white">
         <path d="M256 48a208 208 0 1 0 208 208A208.23 208.23 0 0 0 256 48Zm0 368a160 160 0 1 1 160-160 160.18 160.18 0 0 1-160 160Zm0-272a112 112 0 1 0 112 112 112.14 112.14 0 0 0-112-112Z"/>
       </svg>
@@ -202,7 +202,7 @@ const MapContainer: React.FC<MapContainerProps> = ({
       <svg xmlns="http://www.w3.org/2000/svg"
            height="22"
            width="22"
-           viewBox="0 0 512 512"
+           viewBox="0 0 256 256"
            fill="white">
         <path d="M256 32 20 176l236 144 236-144Zm0 448 236-144-52.92-32.28L256 416 72.92 303.72 20 336Zm0-112 236-144-52.92-32.28L256 304 72.92 191.72 20 224Z"/>
       </svg>

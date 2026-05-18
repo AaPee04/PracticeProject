@@ -44,6 +44,7 @@ function Settings() {
         setDarkEnd
     } = useTheme();
     const [isDark, setIsDark] = useState(false);
+    const [accordionValue, setAccordionValue] = useState<string | undefined>();
 
     useEffect(() => {
         setIsDark(mode === "dark");
@@ -105,41 +106,17 @@ function Settings() {
                             onIonChange={(e) => setFontWeightMode(e.detail.checked ? "bold" : "normal")}
                         />
                     </IonItem>
-                    <IonAccordionGroup expand="inset">
-                        <IonAccordion value="auto-dark">
-                            <IonItem slot="header">
-                                <IonLabel>
-                                    <IonIcon icon={time} className="setting-icon" />
-                                    Yötila
-                                </IonLabel>
-                                <IonToggle
-                                    checked={autoDark}
-                                    onIonChange={(e) => setAutoDark(e.detail.checked)}
-                                    slot="end"
-                                />
-                            </IonItem>
-
-                            <div className="ion-padding" slot="content">
-                                <IonItem>
-                                    <IonLabel>Aloitusaika</IonLabel>
-                                    <IonDatetime
-                                        presentation="time"
-                                        value={darkStart}
-                                        onIonChange={(e) => setDarkStart(String(e.detail.value))}
-                                    />
-                                </IonItem>
-
-                                <IonItem>
-                                    <IonLabel>Lopetusaika</IonLabel>
-                                    <IonDatetime
-                                        presentation="time"
-                                        value={darkEnd}
-                                        onIonChange={(e) => setDarkEnd(String(e.detail.value))}
-                                    />
-                                </IonItem>
-                            </div>
-                        </IonAccordion>
-                    </IonAccordionGroup>
+                    <IonItem>
+                        <IonLabel>
+                            <IonIcon icon={time} className="setting-icon" />
+                            Yötila
+                        </IonLabel>
+                        <IonToggle
+                            justify="end"
+                            checked={autoDark}
+                            onIonChange={(e) => setAutoDark(e.detail.checked)}
+                        />
+                    </IonItem>
                 </IonList>
             </IonContent>
         </IonPage>

@@ -16,7 +16,7 @@ $sql = "
         SUM(duration) AS total_duration,
         COUNT(*) AS total_walks,
         CASE
-            WHEN SUM(duration) > 0 THEN SUM(distance) / (SUM(duration) / 3600)
+            WHEN SUM(duration) > 0 THEN (SUM(distance) / 1000) / (SUM(duration) / 3600)
             ELSE 0
         END AS avg_speed
     FROM walks

@@ -9,3 +9,8 @@ ion-item {
   vertical-align: middle;
   color: var(--ion-color-primary);
 }
+
+ion-input {
+    text-align: right;
+    max-width: 90px;
+}

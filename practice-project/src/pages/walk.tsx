@@ -5,17 +5,11 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonSearchbar,
-  IonFab,
-  IonFabList,
-  IonFabButton,
   IonIcon,
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
-  IonAlert,
-  IonNavLink
 } from '@ionic/react';
 import { chevronUpCircle, colorPalette, globe, searchCircle, square, trashBin } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
@@ -29,12 +23,41 @@ const Walk: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (data.status === "success") {
-          setWalks(data.walks);
+
+          const parsedWalks = data.walks.map((walk: any) => ({
+            ...walk,
+            id: Number(walk.id),
+            distance: Number(walk.distance),
+            duration: Number(walk.duration)
+          }));
+
+          setWalks(parsedWalks);
         }
       })
       .catch(err => console.error("Walk fetch error:", err));
   }, []);
 
+  const deleteWalk = async (id: number) => {
+    try {
+      const res = await fetch("http://localhost/api/delete_walk.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      const data = await res.json();
+
+      if (data.status === "success") {
+        setWalks(prev => prev.filter(walk => walk.id !== id));
+      } else {
+        console.error("Delete error:", data.message);
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
 
   return (
     <IonPage>
@@ -62,7 +85,10 @@ const Walk: React.FC = () => {
               Route
             </IonButton>
 
-            <IonButton color="danger" id={`delete-${walk.id}`}>
+            <IonButton
+              color="danger"
+              onClick={() => deleteWalk(walk.id)}
+            >
               Delete
             </IonButton>
           </IonCard>
