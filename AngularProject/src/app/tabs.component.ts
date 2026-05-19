@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { IonIcon, IonTabBar, IonTabButton, IonTabs, IonLabel } from "@ionic/angular/standalone";
 
 import { addIcons } from "ionicons";
-import { home, gameController, settings, personOutline, statsChart } from "ionicons/icons";
+import { home, gameController, settings, person, statsChart } from "ionicons/icons";
 
 @Component({
     selector: "app-tabs",
@@ -12,6 +12,6 @@ import { home, gameController, settings, personOutline, statsChart } from "ionic
 })
 export class TabsComponent {
     constructor() {
-        addIcons({ home, gameController, settings, personOutline, statsChart });
+        addIcons({ home, gameController, settings, person, statsChart });
     }
 }

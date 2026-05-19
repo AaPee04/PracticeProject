@@ -185,7 +185,7 @@ export class GamePage {
       dice_history: this.scores
     };
 
-    fetch("http://localhost/save_game.php", {
+    fetch("http://localhost/api/save_game.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)

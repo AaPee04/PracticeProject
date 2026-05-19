@@ -6,9 +6,18 @@
 
 <ion-content class="ion-padding">
   <div *ngFor="let game of games" class="game-card">
-    <h3>{{ game.player_name }}</h3>
+
+    <div class="game-header">
+      <h3>{{ game.player_name }}</h3>
+
+      <ion-button color="danger" size="small" (click)="deleteGame(game.id)">
+        Poista
+      </ion-button>
+    </div>
+
     <p>Peli ID: {{ game.id }}</p>
     <p>Päivä: {{ game.created_at }}</p>
+
     <table class="yatzy-table">
 
       <tr>
@@ -16,8 +25,8 @@
         <th>Pisteet</th>
       </tr>
 
-      <tr *ngFor="let key of (game.scores | keyvalue)">
-        <td>{{ key.key }}</td>
+      <tr *ngFor="let key of (game.scores | keyvalue: sortScores)">
+        <td>{{ getScoreName(key.key) }}</td>
         <td>{{ key.value }}</td>
       </tr>
 

@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -28,34 +27,31 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$player = $data["player_name"] ?? "Player";
-$total = $data["total_score"] ?? 0;
-$scores = $data["scores"] ?? [];
-$diceHistory = $data["dice_history"] ?? [];
+$sessionId = $data["session_id"] ?? null;
 
-$stmt = $conn->prepare("INSERT INTO game_sessions (player_name, total_score) VALUES (?, ?)");
-$stmt->bind_param("si", $player, $total);
-$stmt->execute();
-
-$sessionId = $stmt->insert_id;
-$stmt->close();
-
-$stmt = $conn->prepare("INSERT INTO score_entries (session_id, category, score, dice) VALUES (?, ?, ?, ?)");
-
-foreach ($scores as $category => $score) {
-
-    $dice = json_encode($diceHistory[$category] ?? []);
-
-    $stmt->bind_param("isis", $sessionId, $category, $score, $dice);
-    $stmt->execute();
+if (!$sessionId) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Missing session_id"
+    ]);
+    exit;
 }
 
+$stmt = $conn->prepare("DELETE FROM score_entries WHERE session_id = ?");
+$stmt->bind_param("i", $sessionId);
+$stmt->execute();
 $stmt->close();
+
+$stmt = $conn->prepare("DELETE FROM game_sessions WHERE id = ?");
+$stmt->bind_param("i", $sessionId);
+$stmt->execute();
+$stmt->close();
+
 $conn->close();
 
 echo json_encode([
     "success" => true,
-    "message" => "Game saved",
+    "message" => "Game session deleted",
     "session_id" => $sessionId
 ]);
 
