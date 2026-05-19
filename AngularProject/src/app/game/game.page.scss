@@ -1,0 +1,128 @@
+.dice-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  gap: 10px;
+}
+
+.dice {
+  width: 70px;
+  height: 70px;
+
+  background: linear-gradient(145deg, #ffffff, #dcdcdc);
+
+  border-radius: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 42px;
+
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.2),
+    inset 0 2px 4px rgba(255,255,255,0.8);
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.dice:active {
+  transform: scale(0.95);
+}
+
+.dice.locked {
+  background: linear-gradient(145deg, #ffd54f, #ffb300);
+
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 15px rgba(255, 193, 7, 0.8),
+    0 4px 12px rgba(0,0,0,0.3);
+}
+
+.dice.rolling {
+  animation: roll 0.6s ease;
+}
+
+@keyframes roll {
+
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  25% {
+    transform: rotate(90deg) scale(1.15);
+  }
+
+  50% {
+    transform: rotate(180deg) scale(0.9);
+  }
+
+  75% {
+    transform: rotate(270deg) scale(1.15);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.score-table {
+  margin-top: 20px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.score-row {
+  padding: 5px 0;
+  font-size: 16px;
+}
+
+.yatzy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.yatzy-table th {
+  background: #222;
+  color: white;
+  text-align: left;
+  padding: 10px;
+}
+
+.yatzy-table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.yatzy-table tr {
+  cursor: pointer;
+}
+
+.yatzy-table tr:hover {
+  background: #f5f5f5;
+}
+
+.yatzy-table tr.selected {
+  background: #d1e7ff;
+}
+
+.yatzy-table tr.used {
+  background: #ddd;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.divider td {
+  text-align: center;
+  font-weight: bold;
+  background: #fafafa;
+}

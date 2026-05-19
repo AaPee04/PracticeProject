@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Yatzy Game</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <h2>Rolls left: {{ rollsLeft }}</h2>
+  <h3>Noppien summa: {{ diceSum }}</h3>
+
+  <div class="dice-container">
+
+    <div
+      class="dice"
+      *ngFor="let die of dice; let i = index"
+      [class.locked]="locked[i]"
+      [class.rolling]="rolling && !locked[i]"
+      (click)="toggleLock(i)">
+      {{ die }}
+    </div>
+
+  </div>
+
+  <ion-button expand="block" (click)="rollDice()">
+    Roll Dice
+  </ion-button>
+
+  <ion-button expand="block" color="success" (click)="saveScore()">
+    Save Score
+  </ion-button>
+
+  <table class="yatzy-table">
+
+    <thead>
+      <tr>
+        <th>Yhdistelmä</th>
+        <th>Pisteet</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr (click)="selectCategory('ones')" [class.used]="usedCategories['ones']" [class.selected]="selectedCategory === 'ones'">
+        <td>1</td>
+        <td>{{ scores['ones'] ?? countDice(1) }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('twos')" [class.used]="usedCategories['twos']" [class.selected]="selectedCategory === 'twos'">
+        <td>2</td>
+        <td>{{ scores['twos'] ?? (countDice(2) * 2) }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('threes')" [class.used]="usedCategories['threes']" [class.selected]="selectedCategory === 'threes'">
+        <td>3</td>
+        <td>{{ scores['threes'] ?? (countDice(3) * 3) }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('fours')" [class.used]="usedCategories['fours']" [class.selected]="selectedCategory === 'fours'">
+        <td>4</td>
+        <td>{{ scores['fours'] ?? (countDice(4) * 4) }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('fives')" [class.used]="usedCategories['fives']" [class.selected]="selectedCategory === 'fives'">
+        <td>5</td>
+        <td>{{ scores['fives'] ?? (countDice(5) * 5) }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('sixes')" [class.used]="usedCategories['sixes']" [class.selected]="selectedCategory === 'sixes'">
+        <td>6</td>
+        <td>{{ scores['sixes'] ?? (countDice(6) * 6) }}</td>
+      </tr>
+
+      <tr class="divider"><td colspan="2">---</td></tr>
+
+      <tr (click)="selectCategory('threeKind')" [class.used]="usedCategories['threeKind']" [class.selected]="selectedCategory === 'threeKind'">
+        <td>3 samaa</td>
+        <td>{{ scores['threeKind'] ?? threeOfAKind() }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('fourKind')" [class.used]="usedCategories['fourKind']" [class.selected]="selectedCategory === 'fourKind'">
+        <td>4 samaa</td>
+        <td>{{ scores['fourKind'] ?? fourOfAKind() }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('twoPairs')" [class.used]="usedCategories['twoPairs']" [class.selected]="selectedCategory === 'twoPairs'">
+        <td>2 paria</td>
+        <td>{{ scores['twoPairs'] ?? twoPairs() }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('fullHouse')" [class.used]="usedCategories['fullHouse']" [class.selected]="selectedCategory === 'fullHouse'">
+        <td>Full House</td>
+        <td>{{ scores['fullHouse'] ?? fullHouse() }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('smallStraight')" [class.used]="usedCategories['smallStraight']" [class.selected]="selectedCategory === 'smallStraight'">
+        <td>1–5 suora</td>
+        <td>{{ scores['smallStraight'] ?? smallStraight() }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('largeStraight')" [class.used]="usedCategories['largeStraight']" [class.selected]="selectedCategory === 'largeStraight'">
+        <td>2–6 suora</td>
+        <td>{{ scores['largeStraight'] ?? largeStraight() }}</td>
+      </tr>
+
+      <tr (click)="selectCategory('yatzy')" [class.used]="usedCategories['yatzy']" [class.selected]="selectedCategory === 'yatzy'">
+        <td>Yatzy</td>
+        <td>{{ scores['yatzy'] ?? yatzy() }}</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</ion-content>

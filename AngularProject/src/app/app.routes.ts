@@ -11,12 +11,16 @@ export const routes: Routes = [
         loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
       },
       {
-        path: 'new',
-        loadComponent: () => import('./new/new.page').then(m => m.NewPage)
+        path: 'game',
+        loadComponent: () => import('./game/game.page').then(m => m.GamePage)
       },
       {
-        path: 'settings',
-        loadComponent: () => import('./settings/settings.page').then(m => m.SettingsPage)
+        path: 'data',
+        loadComponent: () => import('./data/data.page').then(m => m.DataPage)
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('./profile/profile.page').then(m => m.ProfilePage)
       },
       {
         path: '',
