@@ -153,6 +153,48 @@ export class GamePage {
 
     this.selectedCategory = null;
     this.resetTurn();
+
+    if (this.categories.every(c => this.usedCategories[c])) {
+      this.saveGameToServer();
+    }
+  }
+
+  get totalScore(): number {
+    return Object.values(this.scores)
+      .reduce((sum, val) => sum + (val || 0), 0);
+  }
+
+  get isGameFinished(): boolean {
+    return this.categories.length > 0 &&
+      this.categories.every(c => this.usedCategories[c] === true);
+  }
+
+  saveGameToServer() {
+    console.log("GAME FINISHED:", this.isGameFinished);
+    console.log("USED:", this.usedCategories);
+
+    if (!this.isGameFinished) {
+      alert("Peli ei ole vielä valmis!");
+      return;
+    }
+
+    const payload = {
+      player_name: "Player1",
+      total_score: this.totalScore,
+      scores: this.scores,
+      dice_history: this.scores
+    };
+
+    fetch("http://localhost/save_game.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Game saved:", data);
+        alert("Game saved!");
+      });
   }
 
   resetTurn() {

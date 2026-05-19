@@ -1,0 +1,30 @@
+.game-card {
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.yatzy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.yatzy-table th {
+  background: #222;
+  color: white;
+  padding: 8px;
+  text-align: left;
+}
+
+.yatzy-table td {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.total-row {
+  background: #222;
+  color: white;
+}

@@ -126,3 +126,21 @@
   font-weight: bold;
   background: #fafafa;
 }
+
+.total-row {
+  background: #222;
+  color: white;
+  font-size: 18px;
+}
+
+.total-row td {
+  padding: 12px;
+}
+
+.total-row strong {
+  color: white;
+}
+
+ion-button[disabled] {
+  opacity: 0.5;
+}

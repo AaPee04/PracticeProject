@@ -4,7 +4,6 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 
-// Yhteys MySQL:ään
 $conn = new mysqli($servername, $username, $password);
 
 if ($conn->connect_error) {
@@ -25,27 +24,41 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->select_db($dbName);
 
-$tableSql = "CREATE TABLE IF NOT EXISTS scores (
+$sessionTable = "CREATE TABLE IF NOT EXISTS game_sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    player_name VARCHAR(50) NOT NULL DEFAULT 'Player',
+    total_score INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+if ($conn->query($sessionTable) === TRUE) {
+    echo "game_sessions table ready<br>";
+} else {
+    die("Error game_sessions: " . $conn->error);
+}
+
+$scoresTable = "CREATE TABLE IF NOT EXISTS score_entries (
     id INT AUTO_INCREMENT PRIMARY KEY,
 
-    player_name VARCHAR(50) NOT NULL DEFAULT 'Player',
-
+    session_id INT NOT NULL,
     category VARCHAR(50) NOT NULL,
 
     score INT NOT NULL DEFAULT 0,
 
     dice JSON NOT NULL,
 
-    turn_number INT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY (session_id) REFERENCES game_sessions(id)
+        ON DELETE CASCADE
 )";
 
-if ($conn->query($tableSql) === TRUE) {
-    echo "Table created successfully";
+if ($conn->query($scoresTable) === TRUE) {
+    echo "score_entries table ready<br>";
 } else {
-    echo "Table error: " . $conn->error;
+    die("Error score_entries: " . $conn->error);
 }
 
 $conn->close();
+
 ?>
