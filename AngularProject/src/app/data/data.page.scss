@@ -1,36 +1,70 @@
 .game-card {
   margin-bottom: 20px;
-  padding: 10px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+  padding: 12px;
 
-.yatzy-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
+  background: var(--app-card);
 
-.yatzy-table th {
-  background: #222;
-  color: white;
-  padding: 8px;
-  text-align: left;
-}
+  border-radius: 14px;
 
-.yatzy-table td {
-  padding: 8px;
-  border-bottom: 1px solid #eee;
-}
+  border: 1px solid var(--app-border);
 
-.total-row {
-  background: #222;
-  color: white;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.12);
+
+  color: var(--app-text);
 }
 
 .game-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 10px;
+}
+
+.yatzy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+
+  background: var(--app-table-bg);
+
+  color: var(--app-text);
+
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.yatzy-table th {
+  background: var(--app-table-header);
+
+  color: var(--app-table-header-text);
+
+  padding: 10px;
+
+  text-align: left;
+
+  font-weight: 600;
+}
+
+.yatzy-table td {
+  padding: 10px;
+
+  border-bottom: 1px solid var(--app-border-light);
+}
+
+.yatzy-table tr:hover {
+  background: var(--app-table-hover);
+}
+
+.total-row {
+  background: #2563eb;
+
+  color: white;
+
+  font-weight: bold;
+}
+
+.total-row td {
+  border-bottom: none;
 }

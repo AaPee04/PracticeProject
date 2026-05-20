@@ -13,8 +13,69 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="start-container">
+    <ion-button expand="block" size="large" class="start-button" (click)="startNewGame()">
+      🎲 Aloita uusi peli 🎲
+    </ion-button>
   </div>
+
+  <ion-card class="highscore-card">
+    <ion-card-content class="highscore-content">
+      <ion-icon name="trophy-outline" class="highscore-icon"></ion-icon>
+
+      <div class="highscore-texts">
+        <div class="highscore-title">Paras tulos</div>
+        <div class="highscore-score">{{ bestScore }} pistettä</div>
+        <div class="highscore-meta">Pelaaja: {{ bestPlayer }}</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-grid>
+    <ion-row>
+
+      <ion-col size="4">
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="calculator-outline" class="stat-icon"></ion-icon>
+            <div class="stat-value">{{ totalPoints }}</div>
+            <div class="stat-label">Kokonaispisteet</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="stats-chart-outline" class="stat-icon"></ion-icon>
+            <div class="stat-value">{{ averagePoints }}</div>
+            <div class="stat-label">Keskipisteet</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="4">
+        <ion-card class="stat-card">
+          <ion-card-content>
+            <ion-icon name="albums-outline" class="stat-icon"></ion-icon>
+            <div class="stat-value">{{ totalGames }}</div>
+            <div class="stat-label">Pelit</div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-card class="lastgame-card">
+    <ion-card-content class="lastgame-content">
+      <ion-icon name="dice-outline" class="lastgame-icon"></ion-icon>
+
+      <div class="lastgame-texts">
+        <div class="lastgame-title">Viimeisin peli</div>
+        <div class="lastgame-score">{{ lastScore }} pistettä</div>
+        <div class="lastgame-meta">{{ lastDate }}</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

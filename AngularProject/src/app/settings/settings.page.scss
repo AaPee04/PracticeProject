@@ -1,0 +1,18 @@
+ion-content {
+  --background: var(--app-bg);
+  --color: var(--app-text);
+}
+
+ion-item {
+  --background: var(--app-card);
+  --color: var(--app-text);
+}
+
+ion-toolbar {
+  --background: var(--app-bg);
+  --color: var(--app-text);
+}
+
+ion-list {
+  background: transparent;
+}

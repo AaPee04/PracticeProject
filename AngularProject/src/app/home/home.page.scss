@@ -25,3 +25,262 @@
 #container a {
   text-decoration: none;
 }
+.start-container {
+  margin-top: 40px;
+  padding: 0 20px;
+}
+
+.start-button {
+  --background: var(--app-primary);
+  --color: var(--app-primary-text);
+  border-radius: 18px;
+  padding: 18px 20px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  width: 100%;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  animation: startButtonIn 0.55s ease forwards;
+  animation-delay: 0.15s;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.start-button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.18);
+}
+
+.start-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.20);
+}
+
+@keyframes startButtonIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.start-button ion-icon {
+  font-size: 26px;
+}
+
+ion-button.start-button span {
+  white-space: normal;
+  display: block;
+}
+
+.highscore-card {
+  background: var(--app-card);
+  color: var(--app-text);
+  border-radius: 18px;
+  margin: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  animation: highscoreIn 0.55s ease forwards;
+  animation-delay: 0.25s;
+}
+
+@keyframes highscoreIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.highscore-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.highscore-icon {
+  font-size: 42px;
+  color: var(--app-primary);
+}
+
+.highscore-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.highscore-title {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.highscore-score {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.highscore-meta {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 12px;
+  padding: 0 20px;
+  margin-top: 10px;
+}
+
+.stat-card ion-card-content {
+  padding: 16px 10px;
+}
+
+.stat-card {
+  text-align: center;
+  background: var(--app-card);
+  color: var(--app-text);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  animation: statFadeIn 0.45s ease forwards;
+}
+
+.stat-icon {
+  font-size: 26px;
+  color: var(--app-primary);
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+
+.lastgame-card {
+  background: var(--app-card);
+  color: var(--app-text);
+  border-radius: 18px;
+  margin: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+
+  opacity: 0;
+  transform: translateY(16px) scale(0.96);
+  animation: lastGameIn 0.55s ease forwards;
+  animation-delay: 0.35s;
+}
+
+@keyframes lastGameIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+.lastgame-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.lastgame-icon {
+  font-size: 40px;
+  color: var(--app-primary);
+}
+
+.lastgame-texts {
+  display: flex;
+  flex-direction: column;
+}
+
+.lastgame-title {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.lastgame-score {
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.lastgame-meta {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+.stat-card {
+  text-align: center;
+  background: var(--app-card);
+  color: var(--app-text);
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  animation: statFadeIn 0.45s ease forwards;
+}
+
+ion-col:nth-child(1) .stat-card {
+  animation-delay: 0.05s;
+}
+ion-col:nth-child(2) .stat-card {
+  animation-delay: 0.15s;
+}
+ion-col:nth-child(3) .stat-card {
+  animation-delay: 0.25s;
+}
+
+@keyframes statFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.stat-icon,
+.highscore-icon,
+.lastgame-icon {
+  opacity: 0;
+  animation: iconIn 0.6s ease forwards, iconPulse 2.4s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+@keyframes iconIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

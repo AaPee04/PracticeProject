@@ -22,7 +22,16 @@ export class DataPage implements OnInit {
     fetch("http://localhost/api/get_game.php")
       .then(res => res.json())
       .then(data => {
-        this.games = data.games;
+
+        if (!data.success) {
+          console.error(data);
+          return;
+        }
+
+        this.games = data.games || [];
+      })
+      .catch(err => {
+        console.error("API error", err);
       });
   }
 

@@ -1,31 +1,123 @@
-/* Ionic Variables and Theming
- * ---------------------------------------------------------------
- * Any overrides to theme variables should be placed in this file.
- * For more information, please see:
- * http://ionicframework.com/docs/theming/
- */
-
-/* This sets a different item border color for the default theme on ios and md */
 :root {
-  --ion-item-border-color: var(--ion-background-color-step-200);
+  --app-dice-bg: linear-gradient(145deg, #ffffff, #dcdcdc);
+  --app-dice-locked: linear-gradient(145deg, #ffd54f, #ffb300);
+
+  --app-bg: #f2f7ff;
+  --app-text: #1a1a1a;
+  --app-card: #ffffff;
+  --app-border: #d0d7e2;
+
+  --ion-color-primary: #007bff;
+  --ion-color-primary-rgb: 0, 123, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #006be0;
+  --ion-color-primary-tint: #1a88ff;
+
+  --ion-background-color: var(--app-bg);
+  --ion-background-color-rgb: 242, 247, 255;
+
+  --ion-text-color: var(--app-text);
+  --ion-text-color-rgb: 26, 26, 26;
+
+  --ion-toolbar-background: var(--app-bg);
+  --ion-toolbar-color: var(--app-text);
+
+  --ion-card-background: var(--app-card);
+
+  --ion-item-background: var(--app-card);
+  --ion-item-color: var(--app-text);
+
+  --ion-border-color: var(--app-border);
+
+  --ion-tab-bar-background: var(--app-card);
+  --ion-tab-bar-color: #6b7280;
+  --ion-tab-bar-color-selected: var(--ion-color-primary);
+
+  --ion-input-background: var(--app-card);
+  --ion-placeholder-color: #6b7280;
+
+  --ion-color-danger: #e63946;
+  --ion-color-success: #2a9d8f;
+  --ion-color-warning: #f4a261;
+
+  --app-font-size: 16px;
+  --app-font-weight: 400;
+
+  --app-table-bg: #ffffff;
+  --app-table-header: #222222;
+  --app-table-header-text: #ffffff;
+
+  --app-table-hover: #f5f5f5;
+  --app-table-selected: #d1e7ff;
+  --app-table-used: #dddddd;
+
+  --app-divider: #fafafa;
+
+  --app-border-light: #eeeeee;
 }
 
-/* This sets a different background and item background for the default theme on ios */
-:root.ios {
-  --ion-background-color: var(--ion-background-color-step-50, #f2f2f6);
-  --ion-toolbar-background: var(--ion-background-color);
-  --ion-item-background: #fff;
+html.dark {
+  --app-bg: #0d1b2a;
+  --app-text: #f1f5f9;
+
+  --app-card: #1e293b;
+  --app-border: #334155;
+
+  --app-table-bg: #1e293b;
+
+  --app-table-header: #0f172a;
+  --app-table-header-text: #f8fafc;
+
+  --app-table-hover: #334155;
+  --app-table-selected: #2563eb;
+
+  --app-table-used: #475569;
+
+  --app-divider: #0f172a;
+
+  --app-border-light: #334155;
+
+  --app-dice-bg: linear-gradient(145deg, #334155, #1e293b);
+
+  --app-dice-locked: linear-gradient(145deg, #facc15, #f59e0b);
+
+  --ion-color-primary: #4db8ff;
+  --ion-color-primary-rgb: 77, 184, 255;
+  --ion-color-primary-contrast: #0d1b2a;
+  --ion-color-primary-shade: #43a2e0;
+  --ion-color-primary-tint: #67c2ff;
+
+  --ion-background-color: var(--app-bg);
+  --ion-background-color-rgb: 13, 27, 42;
+
+  --ion-text-color: var(--app-text);
+  --ion-text-color-rgb: 224, 225, 221;
+
+  --ion-toolbar-background: var(--app-bg);
+  --ion-toolbar-color: var(--app-text);
+
+  --ion-card-background: var(--app-card);
+
+  --ion-item-background: var(--app-card);
+  --ion-item-color: var(--app-text);
+
+  --ion-border-color: var(--app-border);
+
+  --ion-tab-bar-background: var(--app-card);
+  --ion-tab-bar-color: #9ca3af;
+  --ion-tab-bar-color-selected: var(--ion-color-primary);
+
+  --ion-input-background: var(--app-card);
+  --ion-placeholder-color: #94a3b8;
+
+  --ion-color-danger: #ff6b6b;
+  --ion-color-success: #52b788;
+  --ion-color-warning: #ffb703;
 }
 
-/* This sets a different background and item background for the default theme on md */
-:root.md {
-  --ion-background-color: var(--ion-background-color-step-100, #f9f9f9);
-  --ion-toolbar-background: var(--ion-background-color);
-  --ion-item-background: #fff;
-}
-
-/* This sets a different item background when dark mode is enabled on ios and md */
-.ion-palette-dark.ios,
-.ion-palette-dark.md {
-  --ion-item-background: #1c1c1d;
+body {
+  background: var(--app-bg);
+  color: var(--app-text);
+  font-size: var(--app-font-size);
+  font-weight: var(--app-font-weight);
 }

@@ -1,13 +1,39 @@
-<ion-header [translucent]="true">
+<ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Settings</ion-title>
+    <ion-title>Display</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Settings</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+
+  <ion-list-header>Appearance</ion-list-header>
+  <ion-list inset="true">
+
+    <ion-item button="true">
+      <ion-label>Text Size</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bold Text</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label>Tumma tila</ion-label>
+      <ion-toggle
+        slot="end"
+        [checked]="theme.isDark()"
+        (ionChange)="onThemeToggle()">
+      </ion-toggle>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list-header>Debug</ion-list-header>
+  <ion-list inset="true">
+    <ion-item>
+      <pre>{{ debugInfo }}</pre>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
