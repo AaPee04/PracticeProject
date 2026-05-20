@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
   totalGames = 0;
 
   bestScore = 0;
-  bestPlayer = "Arttu‑Pekka";
+  bestPlayer = "AaPee";
 
   lastScore = 0;
   lastDate = "";
@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
   }
 
   loadStats() {
-    fetch("http://localhost/api/get_game_stats.php")
+    fetch("http://localhost/yatzy/get_game_stats.php")
       .then(res => res.json())
       .then(data => {
 

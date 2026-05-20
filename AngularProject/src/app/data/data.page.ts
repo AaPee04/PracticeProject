@@ -19,7 +19,7 @@ export class DataPage implements OnInit {
   }
 
   loadGames() {
-    fetch("http://localhost/api/get_game.php")
+    fetch("http://localhost/yatzy/get_game.php")
       .then(res => res.json())
       .then(data => {
 
@@ -40,7 +40,7 @@ export class DataPage implements OnInit {
       return;
     }
 
-    fetch("http://localhost/api/delete_game.php", {
+    fetch("http://localhost/yatzy/delete_game.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

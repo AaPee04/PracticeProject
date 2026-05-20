@@ -11,11 +11,23 @@
 
     <ion-item button="true">
       <ion-label>Text Size</ion-label>
+      <ion-range
+        [ticks]="true"
+        [snaps]="true"
+        [min]="0"
+        [max]="2"
+        [value]="theme.getFontSizeMode()"
+        (ionChange)="onFontSizeChange($event)">
+      </ion-range>
     </ion-item>
 
     <ion-item>
       <ion-label>Bold Text</ion-label>
-      <ion-toggle slot="end"></ion-toggle>
+      <ion-toggle
+        slot="end"
+        [checked]="theme.isBold()"
+        (ionChange)="onBoldToggle()">
+      </ion-toggle>
     </ion-item>
 
     <ion-item lines="full">

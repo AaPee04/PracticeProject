@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { lightTheme, darkTheme } from "./theme";
-import { set } from "ol/transform";
 
 export type ThemeMode = "light" | "dark";
 export type FontWeightMode = "normal" | "bold";
