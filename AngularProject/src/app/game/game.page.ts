@@ -154,9 +154,9 @@ export class GamePage {
     this.selectedCategory = null;
     this.resetTurn();
 
-    if (this.categories.every(c => this.usedCategories[c])) {
+    /*if (this.categories.every(c => this.usedCategories[c])) {
       this.saveGameToServer();
-    }
+    }*/
   }
 
   get totalScore(): number {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -14,18 +14,23 @@ import {
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonIcon, IonCard, IonCardContent, IonCol, IonRow, IonGrid],
+  imports: [
+    IonContent, IonHeader, IonTitle, IonToolbar,
+    IonButton, IonIcon, IonCard, IonCardContent,
+    IonCol, IonRow, IonGrid
+  ],
 })
-export class HomePage {
-  bestScore = 287;
+export class HomePage implements OnInit {
+
+  totalPoints = 0;
+  averagePoints = 0;
+  totalGames = 0;
+
+  bestScore = 0;
   bestPlayer = "Arttu‑Pekka";
 
-  totalPoints = 5420;
-  averagePoints = 215;
-  totalGames = 25;
-
-  lastScore = 198;
-  lastDate = "19.5.2026";
+  lastScore = 0;
+  lastDate = "";
 
   constructor(private router: Router) {
     addIcons({
@@ -35,6 +40,34 @@ export class HomePage {
       statsChartOutline,
       albumsOutline
     });
+  }
+
+  ngOnInit() {
+    this.loadStats();
+  }
+
+  loadStats() {
+    fetch("http://localhost/api/get_game_stats.php")
+      .then(res => res.json())
+      .then(data => {
+
+        if (!data.success) {
+          console.error("Stats API error", data);
+          return;
+        }
+
+        this.totalGames = data.total_games;
+        this.totalPoints = data.total_points;
+        this.averagePoints = data.average_points;
+
+        this.bestScore = data.highest_score;
+        this.lastScore = data.latest_score;
+
+        this.lastDate = data.latest_date || "";
+      })
+      .catch(err => {
+        console.error("API error", err);
+      });
   }
 
   startNewGame() {
